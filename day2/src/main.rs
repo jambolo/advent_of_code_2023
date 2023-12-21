@@ -16,6 +16,7 @@ fn main() {
     let games = read_lines(path).unwrap();
 
     let mut id_sum = 0;
+    let mut sum_of_powers = 0;
 
     // Check games
     for game in games {
@@ -23,6 +24,9 @@ fn main() {
         let mut green = 0;
         let mut blue = 0;
         let mut failed = false;
+        let mut max_red: Option<i32> = None;
+        let mut max_green: Option<i32> = None;
+        let mut max_blue: Option<i32> = None;
 
         // Parse a game
         let game_regex = Regex::new(r"Game (\d+):").unwrap();
@@ -34,26 +38,27 @@ fn main() {
             let separator: &str = &cap[3];
             if color == "red" {
                 red += number;
-                if red > MAX.0 {
-                    failed = true;
-                    break;
-                }
             } else if color == "green" {
                 green += number;
-                if green > MAX.1 {
-                    failed = true;
-                    break;
-                }
             } else if color == "blue" {
                 blue += number;
-                if blue > MAX.2 {
-                    failed = true;
-                    break;
-                }
             } else {
                 println!("Unknown color {}", color);
             }
             if separator != "," {
+                if red > MAX.0 || green > MAX.1 || blue > MAX.2 {
+                    failed = true;
+                }
+                if max_red.is_none() || red > max_red.unwrap() {
+                    max_red = Some(red);
+                }
+                if max_green.is_none() || green > max_green.unwrap() {
+                    max_green = Some(green);
+                }
+                if max_blue.is_none() || blue > max_blue.unwrap() {
+                    max_blue = Some(blue);
+                }
+
                 red = 0;
                 green = 0;
                 blue = 0;
@@ -62,7 +67,11 @@ fn main() {
         if !failed {
             id_sum += game_id;
         }
+
+        let power = max_red.unwrap() * max_green.unwrap() * max_blue.unwrap();
+        sum_of_powers += power;
     }
 
     println!("Sum of game ids is {}", id_sum);
+    println!("Sum of powers is {}", sum_of_powers);
 }
