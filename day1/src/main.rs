@@ -1,16 +1,7 @@
 use std::env;
-use std::{
-    fs::File,
-    io::{self, BufRead, BufReader},
-    path::Path,
-};
+use common::*;
 
 const DIGIT_NAMES: [&str; 10] = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"];
-
-// Reads a file line by line into a vector of strings
-fn read_lines(filename: impl AsRef<Path>) -> io::Result<Vec<String>> {
-    BufReader::new(File::open(filename)?).lines().collect()
-}
 
 // Returns the first digit in a string
 fn first_number_in(s: &str) -> Option<(usize, u32)> {
