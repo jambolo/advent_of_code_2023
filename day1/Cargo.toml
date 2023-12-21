@@ -1,0 +1,6 @@
+
+[package]
+name = "day1"
+version.workspace = true
+authors.workspace = true
+description.workspace = true
