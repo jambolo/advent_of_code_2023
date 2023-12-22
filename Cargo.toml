@@ -2,7 +2,8 @@
 members = [
     "common",
     "day1",
-    "day2"
+    "day2",
+    "day3"
 ]
 resolver = "2"
 
