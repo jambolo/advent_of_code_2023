@@ -13,3 +13,7 @@ Copilot is turning out to be relatively useful. It is pretty good at doing the b
 ### Day 3
 
 Collections in Rust are pretty straightforward. Objects are still a bit of a mystery. 
+
+### Day 4
+
+Objects are still a mystery -- object vs. reference and move vs. copy. Rust and copilot are helpful, telling me how to fix the problems, but I suspect there are many times I am making copies of objects when I could just be using references.

@@ -15,7 +15,7 @@ fn main() {
 
     for line in lines {
         let parts: Vec<&str> = line.split(":").collect();
-        let id: i32 = parts[0].trim().split_whitespace().last().unwrap().parse().unwrap();
+        let _id: i32 = parts[0].trim().split_whitespace().last().unwrap().parse().unwrap();
 
         let sets: Vec<&str> = parts[1].split("|").collect();
         let mut winning: Vec<i32> = sets[0].trim().split_whitespace().map(|s| s.parse().unwrap()).collect();
@@ -23,32 +23,26 @@ fn main() {
 
         winning.sort();
         yours.sort();
-        cards.push((id, winning, yours));
+        cards.push((1, winning, yours));
     }
 
-    // Find the winning cards and sum the points
-    let mut points = 0;
-    for c in cards {
-        let winners = intersection(c.1, c.2);
+    // Find the winning cards and accumulate more cards
+    let mut count = 0;
+    for i in 0..cards.len() {
+        count += cards[i].0;
+        let winners = intersection(&cards[i].1, &cards[i].2);
         if winners.len() > 0 {
-            points += score(winners.len());
+            for j in i + 1 ..= i + winners.len() {
+                cards[j].0 += cards[i].0;
+            }
         }
     }
 
-    println!("Points: {}", points);
+    println!("Count: {}", count);
 }
 
-// Returns the score for a given number of cards
-fn score(n: usize) -> i32 {
-    if n > 0 {
-        return 1 << (n - 1);
-    }
-    else {
-        return 0;
-    }
-}
-// Returns the intersection of two sorted vectors
-fn intersection(a: Vec<i32>, b: Vec<i32>) -> Vec<i32> {
+ // Returns the intersection of two sorted vectors
+fn intersection(a: &Vec<i32>, b: &Vec<i32>) -> Vec<i32> {
     let mut result = Vec::new();
     let mut i = 0;
     let mut j = 0;
