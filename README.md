@@ -17,3 +17,7 @@ Collections in Rust are pretty straightforward. Objects are still a bit of a mys
 ### Day 4
 
 Objects are still a mystery -- object vs. reference and move vs. copy. Rust and copilot are helpful, telling me how to fix the problems, but I suspect there are many times I am making copies of objects when I could just be using references.
+
+### Day 5
+
+Well, that escalated quickly! Part 1 was simple. Part 2 showed that it wasn't a scalable solution. Manipulating intervals is  interesting.
