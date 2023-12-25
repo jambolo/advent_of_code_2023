@@ -16,8 +16,12 @@ Collections in Rust are pretty straightforward. Objects are still a bit of a mys
 
 ### Day 4
 
-Objects are still a mystery -- object vs. reference and move vs. copy. Rust and copilot are helpful, telling me how to fix the problems, but I suspect there are many times I am making copies of objects when I could just be using references.
+Objects are still a mystery -- object vs. reference and move vs. copy, and wtf is borrowing?. Rust and copilot are helpful, telling me how to fix the problems, but I suspect there are many times I am making copies of objects when I could just be using references.
 
 ### Day 5
 
-Well, that escalated quickly! Part 1 was simple. Part 2 showed that it wasn't a scalable solution. Manipulating intervals is  interesting.
+Well, that escalated quickly! Part 1 is simple. Part 2 shows that it wasn't a scalable solution. Manipulating intervals is interesting stuff. I learned there is something called an interval tree, but I don't think it has any use here.
+
+### Day 6
+
+Pretty trivial. I can imagine someone iterating through the possibilities, but the solution for both parts is to solve the quadratic equation and the answer is simply the difference between the roots.
