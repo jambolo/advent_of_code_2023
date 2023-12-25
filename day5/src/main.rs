@@ -1,18 +1,6 @@
 use std::env;
 use common::*;
 
-/*
-const MAP_NAMES: [&str; 7] = [
-    "seed-to-soil map", 
-    "soil-to-fertilizer map", 
-    "fertilizer-to-water map", 
-    "water-to-light map", 
-    "light-to-temperature map", 
-    "temperature-to-humidity map", 
-    "humidity-to-location map"
-];
-*/
-
 fn main() {
     // Get path to data
     let args: Vec<String> = env::args().collect();
