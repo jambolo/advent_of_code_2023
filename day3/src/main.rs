@@ -1,5 +1,4 @@
-use std::env;
-use common::read_lines;
+use common::*;
 use std::collections::BTreeMap;
 use std::collections::BTreeSet;
 
@@ -100,12 +99,7 @@ fn scan_number(grid: &Vec<Vec<char>>, x0: usize, y0: usize) -> (usize, u32, bool
 }
 
 fn main() {
-    // Get path to data
-    let args: Vec<String> = env::args().collect();
-    let path = &args[1];
-
-    // Load data
-    let lines = read_lines(path).unwrap();
+    let lines = load_data();
 
     // Create a 2D array of characters
     let mut grid: Vec<Vec<char>> = Vec::new();

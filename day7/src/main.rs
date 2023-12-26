@@ -1,4 +1,3 @@
-use std::env;
 use common::*;
 
 const SORT_ORDER: [char; 13] = ['A', 'K', 'Q', 'T', '9', '8', '7', '6', '5', '4', '3', '2', 'J'];
@@ -27,19 +26,13 @@ fn hand_sorter(a: &Vec<char>, b: &Vec<char>) -> std::cmp::Ordering {
 }
 
 fn main() {
-    // Get path to data
-    let args: Vec<String> = env::args().collect();
-    let path = &args[1];
-
-    // Load data
-    let lines = read_lines(path).unwrap();
+    let lines = load_data();
 
     let mut game: Vec<(Vec<char>, i64)> = Vec::new();
     for line in lines {
         let play = parse_line(&line);
         game.push(play);
     }
-    // println!("Loaded {} plays", game.len());
 
     game.sort_unstable_by(|a, b| {hand_sorter(&a.0, &b.0)});
 
@@ -48,16 +41,9 @@ fn main() {
         let bid = game[i].1;
         let rank = (game.len() - i) as i64;
         sum += bid * rank;
-    //    println!("{}: {:?}, {}, {}, {} {}", i, &game[i].0, classify(&game[i].0), sorted(&game[i].0), bid, rank)
     }
 
     println!("Sum: {}", sum);
-}
-
-fn sorted(hand: &Vec<char>) -> String {
-    let mut s = hand.clone();
-    s.sort_unstable_by(|a, b| {card_sorter(a, b)});
-    s.iter().collect()
 }
 
 fn parse_line(line: &String) -> (Vec<char>, i64) {

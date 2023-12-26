@@ -1,4 +1,3 @@
-use std::env;
 use common::*;
 
 const DIGIT_NAMES: [&str; 10] = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"];
@@ -69,11 +68,7 @@ fn last_value((a1, a2): (usize, u32), (b1, b2): (usize, usize)) -> u32 {
     }
 }
 fn main() {
-    let args: Vec<String> = env::args().collect();
-
-    let path = &args[1];
-    println!("From file {}", path);
-    let lines = read_lines(path).expect("Could not read file.");
+    let lines = load_data();
 
     let mut sum = 0;
     for line in lines {

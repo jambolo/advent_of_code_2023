@@ -1,13 +1,7 @@
-use std::env;
 use common::*;
 
 fn main() {
-    // Get path to data
-    let args: Vec<String> = env::args().collect();
-    let path = &args[1];
-
-    // Load data
-    let lines = read_lines(path).unwrap();
+    let lines = load_data();
 
     let times = parse_line(&lines[0]);
     let distances = parse_line(&lines[1]);

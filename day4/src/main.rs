@@ -1,14 +1,7 @@
-use std::env;
-use common::read_lines;
-use std::vec::Vec;
+use common::*;
 
 fn main() {
-    // Get path to data
-    let args: Vec<String> = env::args().collect();
-    let path = &args[1];
-
-    // Load data
-    let lines = read_lines(path).unwrap();
+    let lines = load_data();
 
     // Parse the cards
     let mut cards: Vec<(i32, Vec<i32>, Vec<i32>)> = Vec::new();
