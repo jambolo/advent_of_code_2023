@@ -2,6 +2,50 @@ use common::*;
 use std::collections::BTreeMap;
 use std::collections::BTreeSet;
 
+fn main() {
+    let lines = load_data();
+
+    // Create a 2D array of characters
+    let mut grid: Vec<Vec<char>> = Vec::new();
+
+    for s in lines {
+        grid.push(s.chars().collect());
+    }
+
+    let mut sum = 0;
+    let mut gears: BTreeMap<(usize, usize), Vec<u32>> = BTreeMap::new();
+
+    // Scan the grid for part numbers
+    for y in 0 .. grid.len() {
+        let mut x = 0;
+        while x < grid[y].len() {
+            if grid[y][x].is_ascii_digit() {
+                let (new_x, value, is_part_number, adjacent_gears) = scan_number(&grid, x, y);
+                if is_part_number {
+                    sum += value;
+                    for g in adjacent_gears {
+                        gears.entry(g).or_insert(Vec::new()).push(value);
+                    }
+                }
+                x = new_x;
+            }
+            x = x + 1;
+        }
+    }
+
+    println!("Sum: {}", sum);
+
+    let mut gear_ratio_sum: u64 = 0;
+    for g in gears {
+        println!("Gears at ({}, {}): {:?}", g.0.0, g.0.1, g.1);
+        if g.1.len() == 2 {
+            gear_ratio_sum += g.1[0] as u64 * g.1[1] as u64;
+        }
+    }
+
+    println!("Gear ratio sum: {}", gear_ratio_sum);
+}
+
 // Returns true if the character is a symbol
 fn is_symbol(ch: char) -> bool {
     ch != '.' && !ch.is_ascii_digit()
@@ -96,48 +140,4 @@ fn scan_number(grid: &Vec<Vec<char>>, x0: usize, y0: usize) -> (usize, u32, bool
         xn = xn + 1;
     }
     (xn, value, is_part_number, adjacent_gears)
-}
-
-fn main() {
-    let lines = load_data();
-
-    // Create a 2D array of characters
-    let mut grid: Vec<Vec<char>> = Vec::new();
-
-    for s in lines {
-        grid.push(s.chars().collect());
-    }
-
-    let mut sum = 0;
-    let mut gears: BTreeMap<(usize, usize), Vec<u32>> = BTreeMap::new();
-
-    // Scan the grid for part numbers
-    for y in 0 .. grid.len() {
-        let mut x = 0;
-        while x < grid[y].len() {
-            if grid[y][x].is_ascii_digit() {
-                let (new_x, value, is_part_number, adjacent_gears) = scan_number(&grid, x, y);
-                if is_part_number {
-                    sum += value;
-                    for g in adjacent_gears {
-                        gears.entry(g).or_insert(Vec::new()).push(value);
-                    }
-                }
-                x = new_x;
-            }
-            x = x + 1;
-        }
-    }
-
-    println!("Sum: {}", sum);
-
-    let mut gear_ratio_sum: u64 = 0;
-    for g in gears {
-        println!("Gears at ({}, {}): {:?}", g.0.0, g.0.1, g.1);
-        if g.1.len() == 2 {
-            gear_ratio_sum += g.1[0] as u64 * g.1[1] as u64;
-        }
-    }
-
-    println!("Gear ratio sum: {}", gear_ratio_sum);
 }

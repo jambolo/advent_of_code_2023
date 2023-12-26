@@ -2,6 +2,27 @@ use common::*;
 
 const SORT_ORDER: [char; 13] = ['A', 'K', 'Q', 'T', '9', '8', '7', '6', '5', '4', '3', '2', 'J'];
 
+fn main() {
+    let lines = load_data();
+
+    let mut game: Vec<(Vec<char>, i64)> = Vec::new();
+    for line in lines {
+        let play = parse_line(&line);
+        game.push(play);
+    }
+
+    game.sort_unstable_by(|a, b| {hand_sorter(&a.0, &b.0)});
+
+    let mut sum: i64 = 0;
+    for i in 0..game.len() {
+        let bid = game[i].1;
+        let rank = (game.len() - i) as i64;
+        sum += bid * rank;
+    }
+
+    println!("Sum: {}", sum);
+}
+
 fn card_sorter(a: &char, b: &char) -> std::cmp::Ordering {
     let ia = SORT_ORDER.iter().position(|&x| x == *a).unwrap();
     let ib = SORT_ORDER.iter().position(|&x| x == *b).unwrap();
@@ -23,27 +44,6 @@ fn hand_sorter(a: &Vec<char>, b: &Vec<char>) -> std::cmp::Ordering {
     }
 
     return std::cmp::Ordering::Equal;
-}
-
-fn main() {
-    let lines = load_data();
-
-    let mut game: Vec<(Vec<char>, i64)> = Vec::new();
-    for line in lines {
-        let play = parse_line(&line);
-        game.push(play);
-    }
-
-    game.sort_unstable_by(|a, b| {hand_sorter(&a.0, &b.0)});
-
-    let mut sum: i64 = 0;
-    for i in 0..game.len() {
-        let bid = game[i].1;
-        let rank = (game.len() - i) as i64;
-        sum += bid * rank;
-    }
-
-    println!("Sum: {}", sum);
 }
 
 fn parse_line(line: &String) -> (Vec<char>, i64) {
