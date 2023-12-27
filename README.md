@@ -36,4 +36,8 @@ Again pretty trivial, but part 2 involved some manual work in order to discover 
 
 As for Rust, HashMap is convenient, but unlike C/C++, `String` is not `str` and not `Vec<char>`. 
 
-Also, a function returning a reference requires specifying the lifetime of the reference, and it is not clear that you can't specify the wrong lifetime. For example, I returned a reference to a string in an element of a HashMap and specified (I believe) that the reference's lifetime is the same as the HashMap, but that is not correct, is it? Does the lifetime of a HashMap end when an element is removed from it, or does my specification ensure that the refernce String is not destroyed until the HashMap is destroyed?
+Also, a function returning a reference requires specifying the lifetime of the reference, and it is not clear that you can't specify the wrong lifetime. For example, I returned a reference to a string in an element of a HashMap and specified (I believe) that the reference's lifetime is the same as the HashMap, but that is not correct, is it? Does the lifetime of a HashMap end when an element is removed from it, or does my specification ensure that the reference String is not destroyed until the HashMap is destroyed?
+
+### Day 9
+
+Again trivial. In Rust, you have to make a conscious effort to avoid making copies of objects.
