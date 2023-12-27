@@ -20,21 +20,70 @@ fn main() {
         }
     }
 
-    let mut count = 0;
-
-    let start: String = "AAA".to_string();
-    let end: String = "ZZZ".to_string();
-    let mut node_name = &start;
-    while node_name != end.as_str() {
-        let node = graph.get(node_name).unwrap();
-        let step = path[count % path.len()];
-        if step == 'L' {
-            node_name = &node.0;
-        } else {
-            node_name = &node.1;
+    // Find the node names ending in 'A'
+    let mut ghosts: Vec<String> = Vec::new();
+    for node_name in graph.keys() {
+        if node_name.chars().nth(2).unwrap() == 'A' {
+            ghosts.push(node_name.clone());
         }
-        count += 1;
     }
 
-    println!("Count: {}", count);
+    // Put the ghosts at their starting nodes
+    let mut ghost_node_names: Vec<&String> = Vec::new();
+    for node_name in &ghosts {
+        ghost_node_names.push(node_name)
+    }
+
+    struct Stat {
+        end: String,
+        first: i32,
+        second: i32,
+    }
+
+    let mut stats: Vec<Stat> = Vec::new();
+
+    for ghost in ghosts {
+        let mut stat = Stat {
+            end: String::new(),
+            first: 0,
+            second: 0,
+        };
+
+        let mut count:usize = 0;
+        let mut done = false;
+        let mut node_name = &ghost;
+        while !done {
+            let direction = path[count % path.len()];
+            node_name = step(&graph, node_name, direction);
+            count += 1;
+            if node_name.chars().nth(2).unwrap() == 'Z' {
+                if stat.first == 0 {
+                    stat.end = node_name.clone();
+                    stat.first = count as i32;
+                } else {
+                    stat.second = count as i32;
+                    done = true;
+                }
+            }
+        }
+        stats.push(stat);
+    }
+    
+    let mut product:i64 = 1;
+    for stat in stats {
+        assert!(stat.second == stat.first * 2);
+        assert!(stat.first % 293 == 0);
+        product *= (stat.first / 293) as i64;
+    }
+    product *= 293;
+    println!("Product: {}", product);
+}
+
+fn step<'a>(graph: &'a HashMap<String, (String, String)>, node_name: &String, direction: char) -> &'a String {
+    let node = graph.get(node_name).unwrap();
+    if direction == 'L' {
+        return &node.0;
+    } else {
+        return &node.1;
+    }
 }

@@ -28,4 +28,12 @@ Pretty trivial. I can imagine someone iterating through the possibilities, but t
 
 ### Day 7
 
-Pretty trivial again. Lack of good test data made debugging difficult. Speaking of debugging, I can not figure out how to debug with command line arguments.
+Pretty trivial again. Lack of good test data made debugging difficult. Speaking of debugging, I cannot figure out how to debug with command line arguments.
+
+### Day 8
+
+Again pretty trivial, but part 2 involved some manual work in order to discover the cycles and determine their lengths, and then to deal with fact that they are not prime.
+
+As for Rust, HashMap is convenient, but unlike C/C++, `String` is not `str` and not `Vec<char>`. 
+
+Also, a function returning a reference requires specifying the lifetime of the reference, and it is not clear that you can't specify the wrong lifetime. For example, I returned a reference to a string in an element of a HashMap and specified (I believe) that the reference's lifetime is the same as the HashMap, but that is not correct, is it? Does the lifetime of a HashMap end when an element is removed from it, or does my specification ensure that the refernce String is not destroyed until the HashMap is destroyed?
