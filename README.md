@@ -44,4 +44,8 @@ Again trivial. In Rust, you have to make a conscious effort to avoid making copi
 
 ### Day 10
 
-Pretty easy. It helps that I now how to determine if a point is inside a polygon.
+Pretty easy. It helps that I know how to determine if a point is inside a polygon.
+
+### Day 11
+
+Easy again. I wish Rust weren't so picky about integer types. I'm using `as` everywhere, so it is not really helping. Copilot has been really helpful by writing the glue and boiler plate code for me, and also showing how certain things can be implemented in Rust.
