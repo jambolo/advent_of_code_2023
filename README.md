@@ -41,3 +41,7 @@ Also, a function returning a reference requires specifying the lifetime of the r
 ### Day 9
 
 Again trivial. In Rust, you have to make a conscious effort to avoid making copies of objects.
+
+### Day 10
+
+Pretty easy. It helps that I now how to determine if a point is inside a polygon.

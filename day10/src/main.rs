@@ -9,65 +9,166 @@ fn main() {
         grid.push(row);
     }
 
+//    draw_grid(&grid);
+
+    let mut occupied: Vec<Vec<bool>> = vec![vec![false; grid[0].len()]; grid.len()];
+
+    // Mark the starting point as occupied
     let starting_point = find_start(&grid);
+    let points = find_exits(starting_point, &grid);
+    grid[starting_point.1][starting_point.0] = type_from_exits(&points);
 
-    let mut points: Vec<((usize, usize), (isize, isize))> = Vec::new();
-    if starting_point.1 > 0 {
-        let d: (isize, isize) = (0, -1);
-        let n: (usize, usize) = next(starting_point, d);
-        let g = grid[n.1][n.0];
-        if g == '|' || g == 'F' || g == '7' {
-            points.push((n, d));
-        }
+    // Follow the path until the start is reached again, marking each point as occupied
+    occupied[starting_point.1][starting_point.0] = true;
+    let mut p = points[0].clone();
+    while p.0.0 != starting_point.0 || p.0.1 != starting_point.1 {
+        occupied[p.0.1][p.0.0] = true;
+        p = next_point(p, &grid);
     }
-    if starting_point.0 < grid[starting_point.1].len() - 1 {
-        let d: (isize, isize) = (1, 0);
-        let n: (usize, usize) = next(starting_point, d);
-        let g = grid[n.1][n.0];
-        if g == '-' || g == 'J' || g == '7' {
-            points.push((n, d));
-        }
-    }
-    if starting_point.1 < grid.len() - 1 {
-        let d: (isize, isize) = (0, 1);
-        let n: (usize, usize) = next(starting_point, d);
-        let g = grid[n.1][n.0];
-        if g == '|' || g == 'J' || g == 'L' {
-            points.push((n, d));
-        }
-    }
-    if starting_point.0 > 0 {
-        let d: (isize, isize) = (-1, 0);
-        let n: (usize, usize) = next(starting_point, d);
-        let g = grid[n.1][n.0];
-        if g == '-' || g == 'L' || g == 'F' {
-            points.push((n, d));
+
+    // Clear all unoccupied points
+    clear_unoccupied_points(&mut grid, &occupied);
+
+//    draw_grid(&grid);
+
+    // For each unoccupied point, find the number of times a ray in the direction (-1, -1) crosses a pipe wall
+    let mut number_of_inside_points = 0;
+    for y in 0..grid.len() {
+        for x in 0..grid[y].len() {
+            if !occupied[y][x] {
+                if count_crossings(x, y, &grid) % 2 == 1 {
+//                    println!("inside: ({}, {})", x, y);
+                    number_of_inside_points += 1;
+                }
+            }
         }
     }
 
-    // Progress until the two points meet
-    let mut number_of_steps = 1;
-    while points[0].0.0 != points[1].0.0 || points[0].0.1 != points[1].0.1 {
-        let mut new_points: Vec<((usize, usize), (isize, isize))> = Vec::new();
-        
-        // Compute the next step for each of the two points
-        for p in &points {
-            let d = direction(p.1, grid[p.0.1][p.0.0]);
-            let n = next(p.0, d);
-            new_points.push((n, d));
-        }
+//    draw_annotated_grid(&grid, &occupied);
 
-        // Check if the two progress points have reached each other
-        if points[0].0.0 == new_points[1].0.0 && points[0].0.1 == new_points[1].0.1 {
-            break;
-        }
-        points = new_points;
-        number_of_steps += 1;
-    }
-    println!("number of steps: {}", number_of_steps);
+    println!("number of inside points: {}", number_of_inside_points);
 }
 
-fn next(p: (usize, usize), d: (isize, isize)) -> (usize, usize) {
+/* 
+fn draw_grid(grid: &Vec<Vec<char>>) {
+    for y in 0..grid.len() {
+        for x in 0..grid[y].len() {
+            print!("{}", grid[y][x]);
+        }
+        println!("");
+    }
+    println!("");
+}
+
+fn draw_annotated_grid(grid: &Vec<Vec<char>>, occupied: &Vec<Vec<bool>>) {
+    for y in 0..grid.len() {
+        for x in 0..grid[y].len() {
+            if !occupied[y][x] {
+                print!("{}", if count_crossings(x, y, &grid) % 2 == 1 { 'I' } else { 'O' });
+            } else {
+                print!("{}", grid[y][x]);
+            }
+        }
+        println!("");
+    }
+    println!("");
+}
+*/
+
+fn clear_unoccupied_points(grid: &mut Vec<Vec<char>>, occupied: &Vec<Vec<bool>>) {
+    // Set all unoccupied points to '.'
+    for y in 0..grid.len() {
+        for x in 0..grid[y].len() {
+            if !occupied[y][x] {
+                grid[y][x] = '.';
+            }
+        }
+    }
+}
+
+fn type_from_exits(exits: &Vec<((usize, usize), (isize, isize))>) -> char {
+    let d0 = exits[0].1;
+    let d1 = exits[1].1;
+    if d0.1 == -1 && d1.0 == 1 || d1.1 == -1 && d0.0 == 1 {
+        return 'L';
+    }
+    if d0.0 == 0 && d1.0 == 0 {
+        return '|';
+    }
+    if d0.1 == -1 && d1.0 == -1 || d1.1 == -1 && d0.0 == -1 {
+        return 'J';
+    }
+    if d0.1 == 1 && d1.0 == 1 || d1.1 == 1 && d0.0 == 1 {
+        return 'F';
+    }
+    if d0.1 == 0 && d1.1 == 0 {
+        return '-';
+    }
+    if d0.0 == -1 && d1.1 == 1 || d1.0 == -1 && d0.1 == 1 {
+        return '7';
+    }
+    panic!("Unknown type");
+}
+
+fn count_crossings(x0: usize, y0: usize, grid: &Vec<Vec<char>>) -> i32 {
+    let mut number_of_crossings = 0;
+    let mut x = x0;
+    let mut y = y0;
+    while x > 0 && y > 0 {
+        x -= 1;
+        y -= 1;
+        let g = grid[y][x];
+        if g == '|' || g == '-' || g == 'F' || g == 'J' {
+            number_of_crossings += 1;
+        }
+    }
+    number_of_crossings
+}
+
+fn next_point(p: ((usize, usize), (isize, isize)), grid: &Vec<Vec<char>>) -> ((usize, usize), (isize, isize)) {
+    let d = direction(p.1, grid[p.0.1][p.0.0]);
+    let n = advance(p.0, d);
+    (n, d)
+}
+
+fn find_exits(point: (usize, usize), grid: &Vec<Vec<char>>) -> Vec<((usize, usize), (isize, isize))> {
+    let mut exits: Vec<((usize, usize), (isize, isize))> = Vec::new();
+    if point.1 > 0 {
+        let d: (isize, isize) = (0, -1);
+        let n: (usize, usize) = advance(point, d);
+        let g = grid[n.1][n.0];
+        if g == '|' || g == 'F' || g == '7' {
+            exits.push((n, d));
+        }
+    }
+    if point.0 < grid[point.1].len() - 1 {
+        let d: (isize, isize) = (1, 0);
+        let n: (usize, usize) = advance(point, d);
+        let g = grid[n.1][n.0];
+        if g == '-' || g == 'J' || g == '7' {
+            exits.push((n, d));
+        }
+    }
+    if point.1 < grid.len() - 1 {
+        let d: (isize, isize) = (0, 1);
+        let n: (usize, usize) = advance(point, d);
+        let g = grid[n.1][n.0];
+        if g == '|' || g == 'J' || g == 'L' {
+            exits.push((n, d));
+        }
+    }
+    if point.0 > 0 {
+        let d: (isize, isize) = (-1, 0);
+        let n: (usize, usize) = advance(point, d);
+        let g = grid[n.1][n.0];
+        if g == '-' || g == 'L' || g == 'F' {
+            exits.push((n, d));
+        }
+    }
+    exits
+}
+
+fn advance(p: (usize, usize), d: (isize, isize)) -> (usize, usize) {
     let n:(usize, usize) = ((p.0 as isize + d.0) as usize, (p.1 as isize + d.1) as usize);
     n
 }
