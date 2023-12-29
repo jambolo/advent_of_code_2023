@@ -53,3 +53,7 @@ Easy again. I wish Rust weren't so picky about integer types. I'm using `as` eve
 ### Day 12
 
 Permutations ... It could get ugly, but otherwise it is fairly straightforward.
+
+### Day 13
+
+Easy again. I am learning about the features of Rust by asking Copilot to improve my code. `if let ...` is interesting. `if let Some(x) = ... ` is especially handy.
