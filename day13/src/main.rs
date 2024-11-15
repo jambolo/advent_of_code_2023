@@ -4,7 +4,7 @@ const PART_2: bool = true;
 
 fn main() {
     println!("Day 13, part {}", if PART_2 { "2" } else { "1" });
-    let lines = load_data();
+    let lines = load_lines();
     let maps = load_maps(&lines);
     let mut sum: i32 = 0;
     for m in maps {

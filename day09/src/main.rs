@@ -1,7 +1,7 @@
 use common::*;
 
 fn main() {
-    let lines = load_data();
+    let lines = load_lines();
 
     let mut nsum: i64 = 0;
     let mut psum: i64 = 0;

@@ -68,7 +68,7 @@ fn last_value((a1, a2): (usize, u32), (b1, b2): (usize, usize)) -> u32 {
     }
 }
 fn main() {
-    let lines = load_data();
+    let lines = load_lines();
 
     let mut sum = 0;
     for line in lines {

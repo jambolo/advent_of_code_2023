@@ -1,7 +1,7 @@
 use common::*;
 
 fn main() {
-    let lines = load_data();
+    let lines = load_lines();
     let mut iter = lines.iter();
 
     // Load the seeds

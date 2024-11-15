@@ -7,7 +7,7 @@ const MAX: (i32, i32, i32) = ( 12, 13, 14 );
 fn main() {
     println!("Bag max is {} red, {} green, {} blue", MAX.0, MAX.1, MAX.2);
 
-    let games = load_data();
+    let games = load_lines();
 
     let mut id_sum = 0;
     let mut sum_of_powers = 0;

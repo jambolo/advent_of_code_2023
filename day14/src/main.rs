@@ -5,7 +5,7 @@ const CYCLES: i64 = 1000000;
 
 fn main() {
     println!("Day 14, part {}", if PART_2 { "2" } else { "1" });
-    let lines = load_data();
+    let lines = load_lines();
     let mut map:Vec<Vec<char>> = vec![];
     for line in lines {
         map.push(line.chars().collect());

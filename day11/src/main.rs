@@ -3,7 +3,7 @@ use common::*;
 const EXPANSION: i64 = 1000000 - 1;
 
 fn main() {
-    let galaxy = load_data();
+    let galaxy = load_lines();
 
     let (xr, xc) = expand(&galaxy);
     let stars = find_stars(&galaxy);

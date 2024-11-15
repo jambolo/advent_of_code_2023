@@ -3,7 +3,7 @@ use common::*;
 const SORT_ORDER: [char; 13] = ['A', 'K', 'Q', 'T', '9', '8', '7', '6', '5', '4', '3', '2', 'J'];
 
 fn main() {
-    let lines = load_data();
+    let lines = load_lines();
 
     let mut game: Vec<(Vec<char>, i64)> = Vec::new();
     for line in lines {
