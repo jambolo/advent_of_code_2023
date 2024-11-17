@@ -1,9 +1,9 @@
-use common::*;
+use common::load;
 use std::collections::BTreeMap;
 use std::collections::BTreeSet;
 
 fn main() {
-    let lines = load_lines();
+    let lines = load::lines();
 
     // Create a 2D array of characters
     let mut grid: Vec<Vec<char>> = Vec::new();

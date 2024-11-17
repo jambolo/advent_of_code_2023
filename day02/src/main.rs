@@ -1,5 +1,5 @@
 use regex::Regex;
-use common::*;
+use common::load;
 
 // which games would have been possible if the bag contained only 12 red cubes, 13 green cubes, and 14 blue cubes?
 const MAX: (i32, i32, i32) = ( 12, 13, 14 );
@@ -7,7 +7,7 @@ const MAX: (i32, i32, i32) = ( 12, 13, 14 );
 fn main() {
     println!("Bag max is {} red, {} green, {} blue", MAX.0, MAX.1, MAX.2);
 
-    let games = load_lines();
+    let games = load::lines();
 
     let mut id_sum = 0;
     let mut sum_of_powers = 0;

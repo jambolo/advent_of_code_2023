@@ -1,7 +1,7 @@
-use common::*;
+use common::load;
 
 fn main() {
-    let lines = load_lines();
+    let lines = load::lines();
 
     let mut grid: Vec<Vec<char>> = Vec::new();
     for line in &lines {

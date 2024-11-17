@@ -1,9 +1,9 @@
-use common::*;
+use common::load;
 use regex::Regex;
 use std::collections::HashMap;
 
 fn main() {
-    let lines = load_lines();
+    let lines = load::lines();
 
     // Load the path
     let path: Vec<char> = lines[0].chars().collect();

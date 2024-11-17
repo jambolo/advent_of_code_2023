@@ -1,4 +1,4 @@
-use common::*;
+use common::load;
 
 const DIGIT_NAMES: [&str; 10] = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"];
 
@@ -68,7 +68,7 @@ fn last_value((a1, a2): (usize, u32), (b1, b2): (usize, usize)) -> u32 {
     }
 }
 fn main() {
-    let lines = load_lines();
+    let lines = load::lines();
 
     let mut sum = 0;
     for line in lines {

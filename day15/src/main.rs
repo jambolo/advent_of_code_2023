@@ -1,4 +1,4 @@
-use common::*;
+use common::load;
 #[cfg(feature = "part2")]
 use regex::Regex;
 
@@ -6,7 +6,7 @@ fn main() {
     #[cfg(not(feature = "part2"))]
     {
         println!("Day 15, part 1");
-        let steps = load_comma_separated_values();
+        let steps = load::comma_separated_values();
         let sum: u64 = steps.iter().map(|s| hash(&s)).sum();
         println!("Sum: {}", sum);
     }
@@ -14,7 +14,7 @@ fn main() {
     #[cfg(feature = "part2")]
     {
         println!("Day 15, part 2");
-        let steps = load_comma_separated_values();
+        let steps = load::comma_separated_values();
 
         let re_assign = Regex::new(r"^([a-z]+)=(\d+)$").unwrap();
         let re_remove = Regex::new(r"^([a-z]+)-$").unwrap();

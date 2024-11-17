@@ -74,3 +74,16 @@ It turns out that conditional compilation is cumbersome. I needed it this time b
 ### Day 16
 
 Trivial. Took the chance to organize, refactor and clean up some code. I decided to use a stack instead of a recursive implementation. Recursive code is generally harder to read and debug.
+
+### Day 17
+
+Ok, A* in Rust. Let's see how difficult it is to do.
+
+#### Part 1
+Implementing a simple A* turned out to be a challenge because in a typical implmentation, the nodes are static and contain the f and g values and the priority queue entries maintain links to their associated nodes. That causes issues with mutability and lifetimes, the two things that Rust is extremely picky about. In the end, I stored all state about the nodes in the priority queue elements. That was neccessary anyway because the pathfinding for the problem is convoluted. Also, the information I can get from static storage is not necessary for solving this problem.
+
+In general, while A* is the optimal general pathfinding solution, it has implementation issues.
+
+1. Elements in the priority queue must be removed, replaced or changed. That operation is generally not supported by priority queues, which generally assume that entries are immutable and inaccessible until they reach the front of the queue.
+
+2. Node states are updated, making optimizations such as caching and parallelization perilous. This is where an implementation in Rust encounters difficulties.

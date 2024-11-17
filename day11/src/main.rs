@@ -1,9 +1,9 @@
-use common::*;
+use common::load;
 
 const EXPANSION: i64 = 1000000 - 1;
 
 fn main() {
-    let galaxy = load_lines();
+    let galaxy = load::lines();
 
     let (xr, xc) = expand(&galaxy);
     let stars = find_stars(&galaxy);

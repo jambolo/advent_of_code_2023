@@ -1,0 +1,9 @@
+[package]
+name = "day17"
+edition = "2021"
+version.workspace = true
+authors.workspace = true
+description.workspace = true
+
+[dependencies]
+common = { path = "../common" }

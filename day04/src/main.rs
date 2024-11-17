@@ -1,7 +1,7 @@
-use common::*;
+use common::load;
 
 fn main() {
-    let lines = load_lines();
+    let lines = load::lines();
 
     // Parse the cards
     let mut cards: Vec<(i32, Vec<i32>, Vec<i32>)> = Vec::new();

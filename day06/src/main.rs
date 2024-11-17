@@ -1,7 +1,7 @@
-use common::*;
+use common::load;
 
 fn main() {
-    let lines = load_lines();
+    let lines = load::lines();
 
     let times = parse_line(&lines[0]);
     let distances = parse_line(&lines[1]);

@@ -1,4 +1,4 @@
-use common::*;
+use common::load;
 
 const PART_2: bool = true;
 
@@ -10,16 +10,16 @@ enum Direction {
     Down,
 }
 #[derive(Debug, Clone, Copy)]
-    struct Branch {
-        direction: Direction,
-        x: usize,
-        y: usize
-    }
+struct Branch {
+    direction: Direction,
+    x: usize,
+    y: usize
+}
 
 fn main() {
-    println!("Day 15, part {}", if PART_2 { "2" } else { "1" });
+    println!("Day 16, part {}", if PART_2 { "2" } else { "1" });
 
-    let map = load_map();
+    let map = load::map();
 
     if PART_2 {
         let mut max: i32 = 0;
