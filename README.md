@@ -70,3 +70,7 @@ I don't know. These challenges have been very straightforward thus far (except f
 I spent a lot of time unsuccessfully trying to figure out how to get a working and concise equivalent of this: `let boxes: Vec<Vec<Lens>> = vec![Vec:new(); 256];`. I imagine someone that knows Rust well would say, "Oh, yeah. You can't".
 
 It turns out that conditional compilation is cumbersome. I needed it this time because parts 1 and 2 are completely different and I don't know how to manage 2 executables in the same project ("crate"?).
+
+### Day 16
+
+Trivial. Took the chance to organize, refactor and clean up some code. I decided to use a stack instead of a recursive implementation. Recursive code is generally harder to read and debug.

@@ -1,5 +1,7 @@
 use common::*;
 
+const PART_2: bool = true;
+
 #[derive(Debug, Clone, Copy)]
 enum Direction {
     Right,
@@ -15,13 +17,56 @@ enum Direction {
     }
 
 fn main() {
-    println!("Day 15, part 1");
-    let mut map = load_map();
-//    print_map(&map);
+    println!("Day 15, part {}", if PART_2 { "2" } else { "1" });
 
+    let map = load_map();
+
+    if PART_2 {
+        let mut max: i32 = 0;
+        for y in 0..map.len() {
+            let start = Branch { direction: Direction::Right, x: 0, y };
+            let energize = energize(map.clone(), start);
+            if energize > max {
+                max = energize;
+            }
+        }
+
+        for x in 0..map[0].len() {
+            let start = Branch { direction: Direction::Up, x, y: map.len() - 1 };
+            let energize = energize(map.clone(), start);
+            if energize > max {
+                max = energize;
+            }
+        }
+
+        for y in 0..map.len() {
+            let start = Branch { direction: Direction::Left, x: map[0].len() - 1, y };
+            let energize = energize(map.clone(), start);
+            if energize > max {
+                max = energize;
+            }
+        }
+
+        for x in 0..map[0].len() {
+            let start = Branch { direction: Direction::Down, x, y: 0 };
+            let energize = energize(map.clone(), start);
+            if energize > max {
+                max = energize;
+            }
+        }
+        println!("Max energized cells: {}", max);
+
+    } else {
+        let start = Branch { direction: Direction::Right, x: 0, y: 0 };
+        let energize = energize(map, start);
+        println!("Energized cells: {}", energize);
+    }
+}
+
+fn energize(mut map: Vec<Vec<char>>, start: Branch) -> i32 {
     let mut energized: Vec<Vec<i32>> = vec![vec![0; map[0].len()]; map.len()];
     let mut branches: Vec<Branch> = Vec::new();
-    branches.push(Branch { direction: Direction::Right, x: 0, y: 0 });
+    branches.push(start);
     
     // Move according to each branch in the stack until we have none left. Movement in a direction is done until we
     // hit something or we reach the edge of the map. If we hit something, we stop moving in that direction and push
@@ -38,9 +83,8 @@ fn main() {
             Direction::Down => move_down(&mut map, x, y, &mut branches, &mut energized),
         }
     }
-    // Count the number of energized cells
-    let count: i32 = energized.iter().flatten().sum();
-    println!("Energized cells: {}", count);
+    // Return the number of energized cells
+    energized.iter().flatten().sum()
 }
 
 fn move_right(map: &mut Vec<Vec<char>>, mut x: usize, y: usize, branches: &mut Vec<Branch>, energized: &mut Vec<Vec<i32>>) {
