@@ -87,3 +87,7 @@ In general, while A* is the optimal general pathfinding solution, it has impleme
 1. Elements in the priority queue must be removed, replaced or changed. That operation is generally not supported by priority queues, which generally assume that entries are immutable and inaccessible until they reach the front of the queue.
 
 2. Node states are updated, making optimizations such as caching and parallelization perilous. This is where an implementation in Rust encounters difficulties.
+
+### Day 18
+
+Part 1 is pretty straight-forward. Finding a good point-in-poly algorithm proved difficult, though I was able to get away with an adhoc implementation for this problem because I only needed *any* interior point for the flood-fill.
