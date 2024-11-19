@@ -91,3 +91,7 @@ In general, while A* is the optimal general pathfinding solution, it has impleme
 ### Day 18
 
 Part 1 is pretty straight-forward. Finding a good point-in-poly algorithm proved difficult, though I was able to get away with an adhoc implementation for this problem because I only needed *any* interior point for the flood-fill.
+
+### Day 19
+
+It is disappointing that the dictionary type in Rust is called `HashMap`. It is almost always better to name something according to what it is or what it does than according to how it is implemented.
