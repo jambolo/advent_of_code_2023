@@ -99,3 +99,7 @@ It is disappointing that the dictionary type in Rust is called `HashMap`. It is 
 ### Day 20
 
 It seemed fairly straightforward, but Rust's strict mutability and reference lifetime rules made it difficult. I get that Rust forces you to consider potential aliasing and reference problems in order to allow the compiler to make ideal optimization decisions, but for something quick and dirty, I don't mind the compiler assuming worst case.
+
+### Day 21
+
+It's a simple depth-first search, however 2<sup>128</sup> nodes may be a problem. I notice that any cell reached on an even number of steps can also be reached on any greater even number of steps. So, because the number of steps in the puzzle is even, I think an effective optimization is to do a breadth-first search and mark every cell reached on an even number of steps as a terminal cell and to prune any branch that reaches a terminal cell on an even number steps.
