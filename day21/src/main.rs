@@ -79,23 +79,23 @@ fn main() {
     println!("Number of terminals: {}", terminals.len());
 }
 
-fn print_map(map: &Vec<Vec<char>>) {
-    for row in map {
-        for cell in row {
-            print!("{}", cell);
-        }
-        println!();
-    }
-    println!()
-}
-
-fn _print_map_with_terminals(map: &Vec<Vec<char>>, terminals: &HashSet<(usize, usize)>) {
-    let mut annotated_map = map.clone();
-    for (x, y) in terminals {
-        annotated_map[*y][*x] = 'O';
-    }
-    print_map(&annotated_map);
-}
+//fn print_map(map: &Vec<Vec<char>>) {
+//    for row in map {
+//        for cell in row {
+//            print!("{}", cell);
+//        }
+//        println!();
+//    }
+//    println!()
+//}
+//
+//fn _print_map_with_terminals(map: &Vec<Vec<char>>, terminals: &HashSet<(usize, usize)>) {
+//    let mut annotated_map = map.clone();
+//    for (x, y) in terminals {
+//        annotated_map[*y][*x] = 'O';
+//    }
+//    print_map(&annotated_map);
+//}
 
 fn find_start(map: &Vec<Vec<char>>) -> Option<(usize, usize)> {
     map.iter().enumerate().find_map(|(y, row)| {
