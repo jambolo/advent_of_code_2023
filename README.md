@@ -95,3 +95,7 @@ Part 1 is pretty straight-forward. Finding a good point-in-poly algorithm proved
 ### Day 19
 
 It is disappointing that the dictionary type in Rust is called `HashMap`. It is almost always better to name something according to what it is or what it does than according to how it is implemented.
+
+### Day 20
+
+It seemed fairly straightforward, but Rust's strict mutability and reference lifetime rules made it difficult. I get that Rust forces you to consider potential aliasing and reference problems in order to allow the compiler to make ideal optimization decisions, but for something quick and dirty, I don't mind the compiler assuming worst case.
