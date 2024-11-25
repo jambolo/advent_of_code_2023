@@ -1,7 +1,7 @@
 use std::collections::HashMap;
 use common::load;
 
-const PART_2: bool = false;
+const PART_2: bool = true;
 
 #[derive(Debug)]
 struct Node {
@@ -24,7 +24,7 @@ impl Node {
 
 #[derive(Debug)]
 struct Path {
-//    nodes: Vec<usize>,
+    _nodes: Vec<usize>,
     cost: i32,
 }
 
@@ -33,7 +33,6 @@ fn main() {
 
     // Load the map
     let map = load::map();
-//    print_map(&map);
 
     let start = (1, 0);
     let goal = (map.len() - 2, map[0].len() - 1);
@@ -45,24 +44,12 @@ fn main() {
 
     follow_path(&map, 0, (0, 1), false, &mut nodes);
 
-//    println!("Nodes: {:?}", nodes);
 
     // Now we have a graph, let's find all of the paths
     let paths = enumerate_paths(&nodes, 0, 1);
-//    println!("Paths: {:?}", paths);
     let max_cost = paths.iter().map(|p| p.cost).max().unwrap();
     println!("Max cost: {}", max_cost);
 }
-
-//fn print_map(map: &Vec<Vec<char>>) {
-//    for row in map {
-//        for c in row {
-//            print!("{}", c);
-//        }
-//        println!();
-//    }
-//    println!();
-//}
 
 fn follow_path(map: &Vec<Vec<char>>, from: usize, mut dir: (i32, i32), mut directed: bool, nodes: &mut Vec<Node>) {
     let from_node = &nodes[from];
@@ -87,62 +74,126 @@ fn follow_path(map: &Vec<Vec<char>>, from: usize, mut dir: (i32, i32), mut direc
         let c = map[pos.1][pos.0];
         match c {
             '>' => {
-                if dir.0 == -1 && dir.1 == 0 {
-                    break;  // blocked
-                } else {
-                    next_dir = (1, 0);
+                if PART_2 {
+                    let directions = next_directions(&map, pos, dir);
                     if is_node(&map, pos) {
                         // This is a new node
-                        let to = add_node(nodes, pos, from, cost, true);
-                        follow_path(map, to, next_dir, true, nodes);
-                        break; // reached node so done with this path
+                        let to = add_node(nodes, pos, from, cost, directed);
+                        for d in directions {
+                            follow_path(map, to, d, false, nodes);
+                        }
+                        break; // reachded node so done with this path
+                    } else if directions.len() == 0 {
+                        break;  // dead end
+                    }
+                    assert!(directions.len() == 1);
+                    next_dir = directions[0];
+                } else {
+                    if dir.0 == -1 && dir.1 == 0 {
+                        break;  // blocked
                     } else {
-                        directed = true; // the path is now directed
+                        next_dir = (1, 0);
+                        if is_node(&map, pos) {
+                            // This is a new node
+                            let to = add_node(nodes, pos, from, cost, true);
+                            follow_path(map, to, next_dir, true, nodes);
+                            break; // reached node so done with this path
+                        } else {
+                            directed = true; // the path is now directed
+                        }
                     }
                 }
             },
             '^' => {
-                if dir.0 == 0 && dir.1 == 1 {
-                    break;  // blocked
-                } else {
-                    next_dir = (0, -1);
+                if PART_2 {
+                    let directions = next_directions(&map, pos, dir);
                     if is_node(&map, pos) {
                         // This is a new node
-                        let to = add_node(nodes, pos, from, cost, true);
-                        follow_path(map, to, next_dir, true, nodes);
-                        break; // reached node so done with this path
+                        let to = add_node(nodes, pos, from, cost, directed);
+                        for d in directions {
+                            follow_path(map, to, d, false, nodes);
+                        }
+                        break; // reachded node so done with this path
+                    } else if directions.len() == 0 {
+                        break;  // dead end
+                    }
+                    assert!(directions.len() == 1);
+                    next_dir = directions[0];
+                } else {
+                    if dir.0 == 0 && dir.1 == 1 {
+                        break;  // blocked
                     } else {
-                        directed = true; // the path is now directed
+                        next_dir = (0, -1);
+                        if is_node(&map, pos) {
+                            // This is a new node
+                            let to = add_node(nodes, pos, from, cost, true);
+                            follow_path(map, to, next_dir, true, nodes);
+                            break; // reached node so done with this path
+                        } else {
+                            directed = true; // the path is now directed
+                        }
                     }
                 }
             },
             '<' => {
-                if dir.0 == 1 && dir.1 == 0 {
-                    break;  // blocked
-                } else {
-                    next_dir = (-1, 0);
+                if PART_2 {
+                    let directions = next_directions(&map, pos, dir);
                     if is_node(&map, pos) {
                         // This is a new node
-                        let to = add_node(nodes, pos, from, cost, true);
-                        follow_path(map, to, next_dir, true, nodes);
-                        break; // reached node so done with this path
+                        let to = add_node(nodes, pos, from, cost, directed);
+                        for d in directions {
+                            follow_path(map, to, d, false, nodes);
+                        }
+                        break; // reachded node so done with this path
+                    } else if directions.len() == 0 {
+                        break;  // dead end
+                    }
+                    assert!(directions.len() == 1);
+                    next_dir = directions[0];
+                } else {
+                    if dir.0 == 1 && dir.1 == 0 {
+                        break;  // blocked
                     } else {
-                        directed = true; // the path is now directed
+                        next_dir = (-1, 0);
+                        if is_node(&map, pos) {
+                            // This is a new node
+                            let to = add_node(nodes, pos, from, cost, true);
+                            follow_path(map, to, next_dir, true, nodes);
+                            break; // reached node so done with this path
+                        } else {
+                            directed = true; // the path is now directed
+                        }
                     }
                 }
             },
             'v' => {
-                if dir.0 == 0 && dir.1 == -1 {
-                    break;  // blocked
-                } else {
-                    next_dir = (0, 1);
+                if PART_2 {
+                    let directions = next_directions(&map, pos, dir);
                     if is_node(&map, pos) {
                         // This is a new node
-                        let to = add_node(nodes, pos, from, cost, true);
-                        follow_path(map, to, next_dir, true, nodes);
-                        break; // reached node so done with this path
+                        let to = add_node(nodes, pos, from, cost, directed);
+                        for d in directions {
+                            follow_path(map, to, d, false, nodes);
+                        }
+                        break; // reachded node so done with this path
+                    } else if directions.len() == 0 {
+                        break;  // dead end
+                    }
+                    assert!(directions.len() == 1);
+                    next_dir = directions[0];
+                } else {
+                    if dir.0 == 0 && dir.1 == -1 {
+                        break;  // blocked
                     } else {
-                        directed = true; // the path is now directed
+                        next_dir = (0, 1);
+                        if is_node(&map, pos) {
+                            // This is a new node
+                            let to = add_node(nodes, pos, from, cost, true);
+                            follow_path(map, to, next_dir, true, nodes);
+                            break; // reached node so done with this path
+                        } else {
+                            directed = true; // the path is now directed
+                        }
                     }
                 }
             },
@@ -245,8 +296,7 @@ fn enumerate_paths_rec(nodes: &Vec<Node>, from: usize, goal: usize, mut path: Ve
     for (next, cost) in &from_node.edges {
         if *next == goal {
             path.push(goal);
-            paths.push(Path { cost: total_cost + cost });
-//            paths.push(Path { nodes: path.clone(), cost: total_cost + cost });
+            paths.push(Path { _nodes: path.clone(), cost: total_cost + cost });
             path.pop();
         } else if !path.contains(next) {
             path.push(*next);
