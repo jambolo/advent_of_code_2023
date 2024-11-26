@@ -110,4 +110,12 @@ Fairly simple. I had a bug that took a while to find because of all the moving p
 
 ### Day 23
 
-Pathfinding, but longest path? I don't see how A* will work.
+Pathfinding, but longest path? I don't see how A* will work. Ended up constructing a directed graph from the map, and then found all possible paths using a depth-first search using recursion. Part 2 was easy as I just switched to a non-directed graph.
+
+As for Rust, I found that I could side-step mutability and lifetime restrictions by storing indexes of vector elements rather than references to those elements. I don't think that bypassing Rust's safety mechanisms like that is a good idea in general. I wonder how many developers do that as a standard practice just for the sake of convenience.
+
+One of the features I am starting to like about Rust is its extensive support for iterators. It is kind of a pain in the ass to have to deal with iterators and Option<> everywhere, but it does allow you to write some concise code.
+
+### Day 24
+
+Turns out part 1 is just ray intersection, so there only challenge was remembering the math.

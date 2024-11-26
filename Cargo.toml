@@ -22,8 +22,10 @@ members = [
     "day19",
     "day20",
     "day21",
-    "day22"
-, "day23"]
+    "day22",
+    "day23",
+    "day24"
+]
 resolver = "2"
 
 [workspace.package]
