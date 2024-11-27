@@ -10,3 +10,6 @@ description.workspace = true
 [dependencies]
 common = { path = "../common" }
 regex = "1.10.2"
+
+[features]
+part2 = []

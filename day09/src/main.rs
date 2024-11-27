@@ -1,11 +1,12 @@
 use common::load;
 
 fn main() {
+    println!("Day 9, part {}", if cfg!(feature="part2") { "2" } else { "1" });
     let lines = load::lines();
 
     let mut nsum: i64 = 0;
     let mut psum: i64 = 0;
-    for line in &lines {
+    for line in lines {
         let numbers: Vec<i64> = line.split_ascii_whitespace()
                                     .map(|s| s.parse().unwrap())
                                     .collect();

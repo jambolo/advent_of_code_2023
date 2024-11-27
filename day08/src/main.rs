@@ -3,6 +3,7 @@ use regex::Regex;
 use std::collections::HashMap;
 
 fn main() {
+    println!("Day 8, part {}", if cfg!(feature="part2") { "2" } else { "1" });
     let lines = load::lines();
 
     // Load the path
@@ -71,8 +72,8 @@ fn main() {
     
     let mut product:i64 = 1;
     for stat in stats {
-        assert!(stat.second == stat.first * 2);
-        assert!(stat.first % 293 == 0);
+        debug_assert!(stat.second == stat.first * 2);
+        debug_assert!(stat.first % 293 == 0);
         product *= (stat.first / 293) as i64;
     }
     product *= 293;

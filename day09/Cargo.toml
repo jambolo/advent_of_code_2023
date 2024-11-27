@@ -9,3 +9,6 @@ description.workspace = true
 
 [dependencies]
 common = { path = "../common" }
+
+[features]
+part2 = []

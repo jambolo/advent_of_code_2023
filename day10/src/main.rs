@@ -1,10 +1,11 @@
 use common::load;
 
 fn main() {
+    println!("Day 10, part {}", if cfg!(feature="part2") { "2" } else { "1" });
     let lines = load::lines();
 
     let mut grid: Vec<Vec<char>> = Vec::new();
-    for line in &lines {
+    for line in lines {
         let row: Vec<char> = line.chars().collect();
         grid.push(row);
     }

@@ -1,10 +1,9 @@
 use common::load;
 
-const PART_2: bool = true;
 const CYCLES: i64 = 1000000;
 
 fn main() {
-    println!("Day 14, part {}", if PART_2 { "2" } else { "1" });
+    println!("Day 14, part {}", if cfg!(feature="part2") { "2" } else { "1" });
     let lines = load::lines();
     let mut map:Vec<Vec<char>> = vec![];
     for line in lines {
@@ -12,7 +11,7 @@ fn main() {
     }
 //    print_map(&map);
 
-    if PART_2 {
+    if cfg!(feature="part2") {
         let mut previous = map.clone();
         for i in 0..CYCLES {
             tip_north(&mut map);

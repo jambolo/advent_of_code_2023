@@ -1,13 +1,10 @@
 use std::collections::HashSet;
 use common::load;
 
-const PART_2: bool = false;
-
 const NUMBER_OF_STEPS: i64 = 64;
 
-
 fn main() {
-    println!("Day 21, part {}", if PART_2 { "2" } else { "1" });
+    println!("Day 21, part {}", if cfg!(feature="part2") { "2" } else { "1" });
 
     // Load the map
     let map = load::map();

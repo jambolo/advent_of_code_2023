@@ -3,6 +3,7 @@ use std::collections::BTreeMap;
 use std::collections::BTreeSet;
 
 fn main() {
+    println!("Day 3, part {}", if cfg!(feature="part2") { "2" } else { "1" });
     let lines = load::lines();
 
     // Create a 2D array of characters

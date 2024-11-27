@@ -1,8 +1,6 @@
 use regex::Regex;
 use common::load;
 
-const PART_2: bool = false;
-
 #[derive(Debug)]
 struct Step {
     direction: char,
@@ -10,7 +8,7 @@ struct Step {
 }
 
 fn main() {
-    println!("Day 18, part {}", if PART_2 { "2" } else { "1" });
+    println!("Day 18, part {}", if cfg!(feature="part2") { "2" } else { "1" });
 
     // Color is ignored
     let steps_re = Regex::new(r"^([UDLR])\s+(\d+)\s+\(#[0-9a-fA-F]+\)$").unwrap();
@@ -18,7 +16,7 @@ fn main() {
     let lines = load::lines();
     let mut steps:Vec<Step> = Vec::new();
     for line in lines {
-        if let Some(captures) = steps_re.captures(&line) {
+        if let Some(captures) = steps_re.captures(line.as_str()) {
             let step = Step {
                 direction: captures.get(1).unwrap().as_str().chars().next().unwrap(),
                 distance: captures.get(2).unwrap().as_str().parse().unwrap(),
@@ -126,8 +124,8 @@ fn find_interior_point(map: &Vec<Vec<char>>) -> (usize, usize) {
             break;
         }
         // Check if the space up and left is a wall
-        assert!(x > 0);
-        assert!(y > 0);
+        debug_assert!(x > 0);
+        debug_assert!(y > 0);
         if map[y-1][x-1] == '#' {
             return (x, y);
         }

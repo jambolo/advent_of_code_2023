@@ -33,10 +33,8 @@ impl PartialOrd for Node {
 }
 
 
-const PART_2: bool = false;
-
 fn main() {
-    println!("Day 17, part {}", if PART_2 { "2" } else { "1" });
+    println!("Day 17, part {}", if cfg!(feature="part2") { "2" } else { "1" });
 
     let map: Vec<Vec<u32>> = load::numbers_map();
     let start: (usize, usize) = (0, 0);

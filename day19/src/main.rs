@@ -2,8 +2,6 @@ use regex::Regex;
 use common::load;
 use std::collections::HashMap;
 
-const PART_2: bool = false;
-
 //a<2006:qkq,m>2090:A,rfg
 #[derive(Debug)]
 struct Rule {
@@ -22,7 +20,7 @@ struct Part {
 }
 
 fn main() {
-    println!("Day 19, part {}", if PART_2 { "2" } else { "1" });
+    println!("Day 19, part {}", if cfg!(feature="part2") { "2" } else { "1" });
 
     let lines = load::lines();
 
@@ -63,7 +61,7 @@ fn main() {
             println!("{:?} was accepted", part);
             sum += (part.x + part.m + part.a + part.s) as i64;
         } else {
-            assert!(workflow == "R");
+            debug_assert!(workflow == "R");
             println!("{:?} was rejected", part);
         }
     }

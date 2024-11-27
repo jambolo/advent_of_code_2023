@@ -1,7 +1,5 @@
 use common::load;
 
-const PART_2: bool = true;
-
 #[derive(Debug, Clone, Copy)]
 enum Direction {
     Right,
@@ -17,11 +15,18 @@ struct Branch {
 }
 
 fn main() {
-    println!("Day 16, part {}", if PART_2 { "2" } else { "1" });
+    println!("Day 16, part {}", if cfg!(feature="part2") { "2" } else { "1" });
 
     let map = load::map();
 
-    if PART_2 {
+    #[cfg(not(feature = "part2"))]
+    {
+        let start = Branch { direction: Direction::Right, x: 0, y: 0 };
+        let energize = energize(map, start);
+        println!("Energized cells: {}", energize);
+    }
+    #[cfg(feature = "part2")]
+    {
         let mut max: i32 = 0;
         for y in 0..map.len() {
             let start = Branch { direction: Direction::Right, x: 0, y };
@@ -55,11 +60,6 @@ fn main() {
             }
         }
         println!("Max energized cells: {}", max);
-
-    } else {
-        let start = Branch { direction: Direction::Right, x: 0, y: 0 };
-        let energize = energize(map, start);
-        println!("Energized cells: {}", energize);
     }
 }
 

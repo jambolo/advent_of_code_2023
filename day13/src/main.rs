@@ -1,9 +1,7 @@
 use common::load;
 
-const PART_2: bool = true;
-
 fn main() {
-    println!("Day 13, part {}", if PART_2 { "2" } else { "1" });
+    println!("Day 13, part {}", if cfg!(feature="part2") { "2" } else { "1" });
     let lines = load::lines();
     let maps = load_maps(&lines);
     let mut sum: i32 = 0;
@@ -49,7 +47,7 @@ fn find_vertical_mirror(m: &Vec<Vec<char>>) -> Option<i32> {
     for i in 1..num_columns {
         let span = std::cmp::min(i, num_columns - i);
         let mut mirrored = true;
-        if PART_2 {
+        if cfg!(feature="part2") {
             let mut smudged = false;
             for j in 1..=span {
                 let same;
@@ -109,7 +107,7 @@ fn find_horizontal_mirror(m: &Vec<Vec<char>>) -> Option<i32> {
     for i in 1..m.len() {
         let span = std::cmp::min(i, m.len() - i);
         let mut mirrored = true;
-        if PART_2 {
+        if cfg!(feature="part2") {
             let mut smudged = false;
             for j in 1..=span {
                 let same;

@@ -1,6 +1,7 @@
 use common::load;
 
 fn main() {
+    println!("Day 5, part {}", if cfg!(feature="part2") { "2" } else { "1" });
     let lines = load::lines();
     let mut iter = lines.iter();
 

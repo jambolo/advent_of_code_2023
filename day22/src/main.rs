@@ -1,9 +1,7 @@
 use common::load;
 
-const PART_2: bool = false;
-
 fn main() {
-    println!("Day 22, part {}", if PART_2 { "2" } else { "1" });
+    println!("Day 22, part {}", if cfg!(feature="part2") { "2" } else { "1" });
 
     // Load the map
     let lines = load::lines();

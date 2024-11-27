@@ -1,10 +1,11 @@
 use common::load;
 
 fn main() {
+    println!("Day 12, part {}", if cfg!(feature="part2") { "2" } else { "1" });
     let lines = load::lines();
 
     let mut sum: i64 = 0;
-    for line in &lines {
+    for line in lines {
         let (size, template, mask, groups) = parse_line(&line);
         let space = size - (groups.iter().sum::<i32>() as usize + groups.len() - 1);
         let count = number_of_permutations(template, mask, 0, &groups, space);
@@ -56,7 +57,7 @@ fn number_of_permutations(
     count
 }
 
-fn parse_line(line: &str) -> (usize, u64, u64, Vec<i32>) {
+fn parse_line(line: &String) -> (usize, u64, u64, Vec<i32>) {
     let parts: Vec<&str> = line.split_whitespace().collect();
     let (template, mask) = parse_record(parts[0]);
     let numbers: Vec<i32> = parts[1].split(',').map(|s| s.parse().unwrap()).collect();

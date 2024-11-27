@@ -1,7 +1,5 @@
 use common::load;
 
-const PART_2: bool = false;
-
 // Example data
 //const BOUNDS: ((f64, f64), (f64, f64)) = ((7.0, 27.0), (7.0, 27.0));
 
@@ -15,7 +13,7 @@ struct Stone {
 }
 
 fn main() {
-    println!("Day 24, part {}", if PART_2 { "2" } else { "1" });
+    println!("Day 24, part {}", if cfg!(feature="part2") { "2" } else { "1" });
 
     // Load the data
     let lines = load::lines();

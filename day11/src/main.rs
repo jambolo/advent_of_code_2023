@@ -3,6 +3,7 @@ use common::load;
 const EXPANSION: i64 = 1000000 - 1;
 
 fn main() {
+    println!("Day 11, part {}", if cfg!(feature="part2") { "2" } else { "1" });
     let galaxy = load::lines();
 
     let (xr, xc) = expand(&galaxy);

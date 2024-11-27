@@ -1,6 +1,7 @@
 use common::load;
 
 fn main() {
+    println!("Day 4, part {}", if cfg!(feature="part2") { "2" } else { "1" });
     let lines = load::lines();
 
     // Parse the cards

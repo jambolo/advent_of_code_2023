@@ -3,17 +3,16 @@ use common::load;
 use regex::Regex;
 
 fn main() {
+    println!("Day 15, part {}", if cfg!(feature="part2") { "2" } else { "1" });
     #[cfg(not(feature = "part2"))]
     {
-        println!("Day 15, part 1");
         let steps = load::comma_separated_values();
-        let sum: u64 = steps.iter().map(|s| hash(&s)).sum();
+        let sum: u64 = steps.iter().map(|s| hash(s)).sum();
         println!("Sum: {}", sum);
     }
 
     #[cfg(feature = "part2")]
     {
-        println!("Day 15, part 2");
         let steps = load::comma_separated_values();
 
         let re_assign = Regex::new(r"^([a-z]+)=(\d+)$").unwrap();

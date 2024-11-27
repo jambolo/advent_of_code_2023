@@ -2,8 +2,6 @@ use regex::Regex;
 use common::load;
 use std::collections::{ HashMap, VecDeque };
 
-const PART_2: bool = false;
-
 const NUMBER_OF_BUTTON_PRESSES: i64 = 1000;
 
 #[derive(Debug)]
@@ -26,7 +24,7 @@ impl<'a> Module<'a> {
 }
 
 fn main() {
-    println!("Day 20, part {}", if PART_2 { "2" } else { "1" });
+    println!("Day 20, part {}", if cfg!(feature="part2") { "2" } else { "1" });
 
     let lines = load::lines();
     let mut modules = load_modules(&lines);

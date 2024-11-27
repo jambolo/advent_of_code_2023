@@ -1,8 +1,6 @@
 use std::collections::HashMap;
 use common::load;
 
-const PART_2: bool = true;
-
 #[derive(Debug)]
 struct Node {
     x: usize,
@@ -29,7 +27,7 @@ struct Path {
 }
 
 fn main() {
-    println!("Day 23, part {}", if PART_2 { "2" } else { "1" });
+    println!("Day 23, part {}", if cfg!(feature="part2") { "2" } else { "1" });
 
     // Load the map
     let map = load::map();
@@ -59,12 +57,12 @@ fn follow_path(map: &Vec<Vec<char>>, from: usize, mut dir: (i32, i32), mut direc
     loop {
         // If this position is a node, add edges and stop following the path
         if let Some(to) = find_node_at(pos, nodes) {
-            assert!(from_node.find_edge(to).is_none());
+            debug_assert!(from_node.find_edge(to).is_none());
             nodes[from].add_edge(to, cost);
             if !directed {
                 let to_node = &nodes[to];
                 if let Some(existing_cost) = to_node.find_edge(from) {
-                    assert!(existing_cost == cost);
+                    debug_assert!(existing_cost == cost);
                 } else {
                     nodes[to].add_edge(from, cost);
                 }
@@ -74,7 +72,7 @@ fn follow_path(map: &Vec<Vec<char>>, from: usize, mut dir: (i32, i32), mut direc
         let c = map[pos.1][pos.0];
         match c {
             '>' => {
-                if PART_2 {
+                if cfg!(feature="part2") {
                     let directions = next_directions(&map, pos, dir);
                     if is_node(&map, pos) {
                         // This is a new node
@@ -86,7 +84,7 @@ fn follow_path(map: &Vec<Vec<char>>, from: usize, mut dir: (i32, i32), mut direc
                     } else if directions.len() == 0 {
                         break;  // dead end
                     }
-                    assert!(directions.len() == 1);
+                    debug_assert!(directions.len() == 1);
                     next_dir = directions[0];
                 } else {
                     if dir.0 == -1 && dir.1 == 0 {
@@ -105,7 +103,7 @@ fn follow_path(map: &Vec<Vec<char>>, from: usize, mut dir: (i32, i32), mut direc
                 }
             },
             '^' => {
-                if PART_2 {
+                if cfg!(feature="part2") {
                     let directions = next_directions(&map, pos, dir);
                     if is_node(&map, pos) {
                         // This is a new node
@@ -117,7 +115,7 @@ fn follow_path(map: &Vec<Vec<char>>, from: usize, mut dir: (i32, i32), mut direc
                     } else if directions.len() == 0 {
                         break;  // dead end
                     }
-                    assert!(directions.len() == 1);
+                    debug_assert!(directions.len() == 1);
                     next_dir = directions[0];
                 } else {
                     if dir.0 == 0 && dir.1 == 1 {
@@ -136,7 +134,7 @@ fn follow_path(map: &Vec<Vec<char>>, from: usize, mut dir: (i32, i32), mut direc
                 }
             },
             '<' => {
-                if PART_2 {
+                if cfg!(feature="part2") {
                     let directions = next_directions(&map, pos, dir);
                     if is_node(&map, pos) {
                         // This is a new node
@@ -148,7 +146,7 @@ fn follow_path(map: &Vec<Vec<char>>, from: usize, mut dir: (i32, i32), mut direc
                     } else if directions.len() == 0 {
                         break;  // dead end
                     }
-                    assert!(directions.len() == 1);
+                    debug_assert!(directions.len() == 1);
                     next_dir = directions[0];
                 } else {
                     if dir.0 == 1 && dir.1 == 0 {
@@ -167,7 +165,7 @@ fn follow_path(map: &Vec<Vec<char>>, from: usize, mut dir: (i32, i32), mut direc
                 }
             },
             'v' => {
-                if PART_2 {
+                if cfg!(feature="part2") {
                     let directions = next_directions(&map, pos, dir);
                     if is_node(&map, pos) {
                         // This is a new node
@@ -179,7 +177,7 @@ fn follow_path(map: &Vec<Vec<char>>, from: usize, mut dir: (i32, i32), mut direc
                     } else if directions.len() == 0 {
                         break;  // dead end
                     }
-                    assert!(directions.len() == 1);
+                    debug_assert!(directions.len() == 1);
                     next_dir = directions[0];
                 } else {
                     if dir.0 == 0 && dir.1 == -1 {
@@ -209,7 +207,7 @@ fn follow_path(map: &Vec<Vec<char>>, from: usize, mut dir: (i32, i32), mut direc
                 } else if directions.len() == 0 {
                     break;  // dead end
                 }
-                assert!(directions.len() == 1);
+                debug_assert!(directions.len() == 1);
                 next_dir = directions[0];
             },
             _ => {
